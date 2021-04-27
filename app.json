@@ -1,0 +1,12 @@
+{
+  "name": "smokillerNative",
+  "displayName": "smokillerNative",
+  "expo": {
+    "name": "smokillerNative",
+    "slug": "smokillerNative",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
