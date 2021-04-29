@@ -1,13 +1,50 @@
 import React from 'react';
+import { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, Button, Image } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 
-export default function Login( { setState }) {
+import axios from 'axios';
+import { onChange } from 'react-native-reanimated';
 
-    const onClick= () => {
-      setState({
-        isLogin : true,
-      })
-    }
+
+export default function Login( { navigation, routes}) {
+
+
+  const [inputs, setInputs] = useState({id : '', password : ''});
+
+  const {id, password} = inputs;
+
+  const onChangeId = function(text) {
+    console.log(text)
+    
+    setInputs({
+      ...inputs, id : text,
+    });
+    
+  };
+
+  const onChangePw = function(text) {
+    console.log(text)
+
+    setInputs({
+      ...inputs, password : text,
+    });
+  }
+
+
+    const onClick= async function () {
+      await axios.post('http://192.168.0.8:3333/api/login', {id : 'abc', password : 'def'}, {withCredentials : true}).then(response => {
+        console.log(response.data.name);
+
+        navigation.navigate({ name : 'container'})
+
+      }).catch(err => {
+        console.log(err);
+      });
+      
+
+    };
+
     return (
         <View style={styles.container}>
         <Image source={
@@ -15,11 +52,19 @@ export default function Login( { setState }) {
           <TextInput
             placeholder="ID"
             style={styles.textInput}
+            name="id"
+            onChangeText={onChangeId}
+            value={id}
+            
             />
   
             <TextInput
             placeholder="PW"
             style={styles.textInput}
+            textContentType='password'
+            name="password"
+            onChangeText={onChangePw}
+            value={password}
 
             />
   
@@ -32,7 +77,6 @@ export default function Login( { setState }) {
   const styles = StyleSheet.create({
     textInput: {
       width : 200,
-      height : '15%',
       margin : 3,
       padding : 3,
       borderColor : 'gray',
@@ -41,8 +85,11 @@ export default function Login( { setState }) {
       backgroundColor : '#ffffff',
     },
     container : {
-      marginTop : 100,
+      flex : 1,
+      marginTop : -100,
       backgroundColor : '#ffffff',
+      alignItems: 'center',
+      justifyContent: 'center', 
     }
   });
   
