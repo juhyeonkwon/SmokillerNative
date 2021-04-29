@@ -8,6 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Login from './component/login'
 import Container from './component/Container'
+import Photo from './component/photo/Photo';
 
 export default function App() {
   const [state, setState] = useState(
@@ -21,9 +22,14 @@ export default function App() {
   return (
     <NavigationContainer theme={{colors: { background : 'rgb(255,255,255)'}}}>
     <Stack.Navigator>
-      <Stack.Screen name="container" component={Container} />
+     
       <Stack.Screen name="login" component={Login} setState={setState} options={{ }}/>
+      <Stack.Screen name="container" component={Container} />
+    
 
+    {/*
+      <Stack.Screen name="photo" component={Photo} />
+      */}
     </Stack.Navigator>
   </NavigationContainer>
   
