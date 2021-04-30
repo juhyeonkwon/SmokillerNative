@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { StyleSheet, Text, TextInput, View, Button, Image, ListViewComponent, FlatList } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, Image, ListViewComponent, FlatList, ScrollView } from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 
 
@@ -40,14 +40,22 @@ export default function PhotoList() {
 
     return (
         <View style={styles.container}>
-            <Text>사진 리스트</Text>
+            <ScrollView>
+
+
+
+                
+            </ScrollView>
+            <Text></Text>
         </View>    
     )  
 }
 
 const styles = StyleSheet.create({ 
     container : {
-        flex : 1
+        flex : 1,
+        justifyContent: 'center', 
+        alignItems: 'center',
     },
 });
 

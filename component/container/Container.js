@@ -17,12 +17,7 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator(); 
   
 export default function Container() {
-  useEffect(() => {
-    
-    
-    
-  
-  })
+
     return (
         <Tab.Navigator
         screenOptions={({ route }) => ({

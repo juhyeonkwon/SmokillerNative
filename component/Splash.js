@@ -32,8 +32,8 @@ export default function Splash( {navigation} ) {
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}> 
-            
-            <Text>첫 화면</Text>
+            <Image 
+            source={require('../public/smokiller.png')} style={{ width : 280, height : 72}} />
 
 
         </View>
