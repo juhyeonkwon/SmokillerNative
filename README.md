@@ -10,8 +10,11 @@ npm install --save react-native-linear-gradient
 npm install expo-linear-gradient
 
 npm install @react-navigation/native
+
 npm install @react-navigation/stack
+
 npm install @react-navigation/bottom-tabs
+
 expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
 
 npm install react-native-table-component
