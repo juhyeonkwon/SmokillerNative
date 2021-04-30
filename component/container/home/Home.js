@@ -3,9 +3,10 @@ import { StyleSheet, Text, TextInput, View, Button, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { StackActions } from '@react-navigation/routers';
 
 
-export default function Home() {
+export default function Home({ navigation }) {
 
     useEffect(() => {
         /*
@@ -48,10 +49,12 @@ export default function Home() {
     const {id, name} = state;
 
 
+
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text>메인페이지, 그래프가 들어갈예정</Text>
-            <Text>{id}, {name} </Text>
+            <Text>현재 접속중인 관리자의 id : {id}, 이름 : {name} </Text>
+
         </View>
     )
 }
