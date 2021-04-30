@@ -3,12 +3,20 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { StyleSheet, Text, TextInput, View, Button, Image, ListViewComponent, FlatList } from 'react-native';
+import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 
 
 
 
 
 export default function Photo() {
+
+    useEffect(() => {
+
+        getPhoto();
+        
+
+    }, [])
     const [states, setStates] = useState({
         data : [],
     });
@@ -27,13 +35,11 @@ export default function Photo() {
         })
     }
     
-    getPhoto();
 
     const {data} = states;
 
     return (
         <View style={styles.container}>
-            <ListViewComponent><FlatList data={data} /></ListViewComponent>
 
         </View>    
     )  

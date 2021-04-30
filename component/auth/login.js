@@ -4,37 +4,39 @@ import { StyleSheet, Text, TextInput, View, Button, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
 import axios from 'axios';
-import { onChange } from 'react-native-reanimated';
+import { onChange, set } from 'react-native-reanimated';
+
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 export default function Login( { navigation, routes}) {
 
 
-  const [inputs, setInputs] = useState({id : '', password : ''});
+    const [inputs, setInputs] = useState({id : '', password : ''});
 
-  const {id, password} = inputs;
+    const {id, password} = inputs;
 
-  const onChangeId = function(text) {
-    console.log(text)
-    
-    setInputs({
-      ...inputs, id : text,
-    });
-    
-  };
+    const onChangeId = function(text) {   
+      setInputs({
+        ...inputs, id : text,
+      });
+      
+    };
 
-  const onChangePw = function(text) {
-    console.log(text)
-
-    setInputs({
-      ...inputs, password : text,
-    });
-  }
+    const onChangePw = function(text) {
+      setInputs({
+        ...inputs, password : text,
+      });
+    }
 
 
     const onClick= async function () {
-      await axios.post('http://192.168.0.8:3333/api/login', {id : 'abc', password : 'def'}, {withCredentials : true}).then(response => {
-        console.log(response.data.name);
+      await axios.post('http://192.168.0.8:3333/api/login', {id : id, password : password}, {withCredentials : true}).then(response => {
+
+      //로그인을 하게되면 AsyncStorage에 로그인 정보를 저장하게 된다. 받아올 값은 user_id와 name 값
+        
+
+      
 
         navigation.navigate({ name : 'container'})
 

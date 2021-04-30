@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, View, Button, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import Login from './login';
+import Photo from './photo/Photo';
 import { useEffect } from 'react';
 
 
@@ -36,8 +36,10 @@ export default function Container() {
   })
     return (
         <Tab.Navigator>
-          <Tab.Screen name="Home" component={HomeScreen} />
+          <Tab.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
           <Tab.Screen name="Settings" component={SettingsScreen} />
+          <Tab.Screen name="photo" component={Photo} />
+
         </Tab.Navigator>
     )
 
