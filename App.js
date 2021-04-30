@@ -9,8 +9,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Login from './component/auth/login'
 import Container from './component/container/Container'
-import Photo from './component/container/photo/Photo';
-
+import Splash from './component/Splash'
 
 export default function App() {
  
@@ -22,9 +21,9 @@ export default function App() {
     <NavigationContainer theme={{colors: { background : 'rgb(255,255,255)'}}}>
      
     <Stack.Navigator>
-      <Stack.Screen name="splash"></Stack.Screen>
-      <Stack.Screen name="login" component={Login} setState={setState} options={{headerShown: false}}/>
-      <Stack.Screen name="container" component={Container} options={{headerShown: false}} />  
+      <Stack.Screen name="splash" component={Splash} options={{headerShown: false}}></Stack.Screen>
+      <Stack.Screen name="login" component={Login} options={{headerShown: false}}/>
+      <Stack.Screen name="container" component={Container} options={{headerShown: false}} /> 
     
       
     </Stack.Navigator>

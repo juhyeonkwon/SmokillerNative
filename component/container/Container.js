@@ -5,17 +5,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Photo from './photo/Photo';
 import { useEffect } from 'react';
+import Home from './home/Home';
 
 
-function HomeScreen() {
-  
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Home!</Text>
-      </View>
-    );
-  }
-  
+
   function SettingsScreen() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -36,10 +29,9 @@ export default function Container() {
   })
     return (
         <Tab.Navigator>
-          <Tab.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
-          <Tab.Screen name="Settings" component={SettingsScreen} />
-          <Tab.Screen name="photo" component={Photo} />
-
+          <Tab.Screen name="Home" component={Home} options={{headerShown: false}}/>
+          <Tab.Screen name="photo" component={Photo} options={{headerShown: false}}/>
+          <Tab.Screen name="Settings" component={SettingsScreen} options={{headerShown: false}}/>
         </Tab.Navigator>
     )
 

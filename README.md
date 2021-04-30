@@ -16,4 +16,4 @@ expo install react-native-gesture-handler react-native-reanimated react-native-s
 
 npm install react-native-table-component
 
-npm i @react-native-community/async-storage
+expo install @react-native-async-storage/async-storage

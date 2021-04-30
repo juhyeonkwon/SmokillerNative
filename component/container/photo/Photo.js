@@ -1,53 +1,28 @@
+/*
+*   사진 리스트와, 디테일을 navigating 하기위한 상위 네비게이터
+*
+*/
+
 import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { StyleSheet, Text, TextInput, View, Button, Image, ListViewComponent, FlatList } from 'react-native';
-import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
-
-
+import { createStackNavigator } from '@react-navigation/stack';
+import PhotoList from './PhotoList';
+import PhotoDetail from './PhotoDetail';
 
 
 
 export default function Photo() {
 
-    useEffect(() => {
-
-        getPhoto();
-        
-
-    }, [])
-    const [states, setStates] = useState({
-        data : [],
-    });
-
-
-    async function getPhoto() {
-        await axios.post('http://192.168.0.8:3333/api/photo/list', {withCredentials : true}).then(response => {
-            console.log(response.data);
-
-            setStates({
-                data : response.data,
-            });
-
-        }).catch(err => {
-            console.log(err);
-        })
-    }
-    
-
-    const {data} = states;
+    const Stack = createStackNavigator();
 
     return (
-        <View style={styles.container}>
-
-        </View>    
+        <Stack.Navigator>
+            <Stack.Screen name="photoList" component={PhotoList} options={{headerShown: false}} />
+            <Stack.Screen name="photoDetal" component={PhotoDetail} options={{headerShown: false}} />
+        </Stack.Navigator>
     )  
 }
-
-const styles = StyleSheet.create({ 
-    container : {
-        flex : 1
-    },
-});
 

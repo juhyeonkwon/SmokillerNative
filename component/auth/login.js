@@ -4,9 +4,8 @@ import { StyleSheet, Text, TextInput, View, Button, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
 import axios from 'axios';
-import { onChange, set } from 'react-native-reanimated';
 
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '../../node_modules/@react-native-async-storage/async-storage';
 
 
 export default function Login( { navigation, routes}) {
@@ -33,12 +32,23 @@ export default function Login( { navigation, routes}) {
     const onClick= async function () {
       await axios.post('http://192.168.0.8:3333/api/login', {id : id, password : password}, {withCredentials : true}).then(response => {
 
-      //로그인을 하게되면 AsyncStorage에 로그인 정보를 저장하게 된다. 받아올 값은 user_id와 name 값
-        
+        //로그인을 하게되면 AsyncStorage에 로그인 정보를 저장하게 된다. 받아올 값은 user_id와 name 값
+        const setData = async(data) => {
+          try {
+            const jsonValue = JSON.stringify(data);
+            await AsyncStorage.setItem('user_info', jsonValue);
+            console.log(data);
+          } catch(e) {
+            console.log(e);
+          }
+        }
+
+        setData(response.data).then( () => {
+          navigation.navigate({ name : 'container'})
+        });
 
       
-
-        navigation.navigate({ name : 'container'})
+        //AsyncStorage에 로그인 정보를 저장하고 난후 Container 컴포넌트로 navigating 한다.
 
       }).catch(err => {
         console.log(err);
@@ -50,7 +60,7 @@ export default function Login( { navigation, routes}) {
     return (
         <View style={styles.container}>
         <Image source={
-          require('../public/smokiller.png')} style={{ width : 200, height : 51}} />
+          require('../../public/smokiller.png')} style={{ width : 200, height : 51}} />
           <TextInput
             placeholder="ID"
             style={styles.textInput}
