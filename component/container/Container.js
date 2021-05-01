@@ -1,3 +1,8 @@
+/*
+*   메인 컨테이너 최상위 네비게이터
+*
+*/
+
 import React from 'react';
 import { StyleSheet, Text, TextInput, View, Button, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -71,14 +76,4 @@ export default function Container() {
           <Tab.Screen name="Settings" component={Setting} options={{headerShown: false}}/>
         </Tab.Navigator>
     )
-
-
-    /*
-    const styles = StyleSheet.create({ 
-        
-        
-    )}
-
-
-*/
 };

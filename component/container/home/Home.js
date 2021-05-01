@@ -9,22 +9,7 @@ import { StackActions } from '@react-navigation/routers';
 export default function Home({ navigation }) {
 
     useEffect(() => {
-        /*
-        const getData = async () => {
-            const jsonValue= await AsyncStorage.getItem('user_info');
-            return jsonValue != null ? JSON.parse(jsonValue) : null;
-        }
-
-        let user = getData('user_info').then( () => {
-            console.log(user)
-
-            setState({
-                id : user.id,
-                name : user.name
-            });
-        });
-        */
-
+        
         AsyncStorage.getItem('user_info', (err, result) => {
             console.log(result);
 

@@ -32,28 +32,3 @@ export default function App() {
 
   );
 }
-
-
-const styles = StyleSheet.create({
-  container: {
-    borderWidth : 2,
-    borderRadius : 2,
-    borderColor : 'gray',
-    flex: 4, 
-    alignItems: 'center',
-    justifyContent: 'center',    
-  },
-  header : {
-    flex : 0.5,
-  },
-  title : {
-    flex : 0.5,
-  },
-  content : {
-    flex : 4,
-  },
-  footer : {
-    flex : 0.5,
-  }
- 
-});
