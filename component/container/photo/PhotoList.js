@@ -3,7 +3,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { StyleSheet, Text, TextInput, View, Button, Image, ListViewComponent, FlatList, ScrollView } from 'react-native';
-import { Table, TableWrapper, Row, Rows, Col, Cols, Cell, DataTable } from 'react-native-table-component';
+import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 
 
 
@@ -16,17 +16,17 @@ export default function PhotoList() {
         getPhoto();
         
 
-    }, [])
+    }, []);
+
     const [states, setStates] = useState({
-        data : [],
+        data : '',
     });
 
 
     async function getPhoto() {
         await axios.post('http://192.168.0.8:3333/api/photo/list', {page : 1}, {withCredentials : true}).then(response => {
 
-
-         /*
+         
             let arr = new Array();
 
             for(let i = 0 ; i < response.data.length; i++) {
@@ -39,12 +39,11 @@ export default function PhotoList() {
                 arr.push(temp);
             }
 
-            console.log(arr);
-            */
+            
 
-            console.log(response.data)
+            console.log(arr)
             setStates({
-                data : response.data,
+                data : arr,
             });
 
         }).catch(err => {
@@ -53,32 +52,20 @@ export default function PhotoList() {
     }
     
 
-    const {data} = states;
+    const { data } = states;
+    
 
-    const colums = [
-        {
-            name : 'No',
-            selector : 'id',
-        },
-        {
-            name : 'Name',
-            selector : 'name',
-        },
-        {
-            name : 'Time',
-            selector : 'time',
-        },
-        {
-            name : 'State',
-            selector : 'state'
-        }
-    ]
+    const dataOnPress = (e) => {
+        console.log(e);
+    }
+
+
 
     return (
         <View style={styles.container}>
-                     <Text>ㅇㅅㅇ</Text>
-
-
+            {data.map(data => (
+                <Text key={data[0]} onPress={dataOnPress}>{data}</Text>
+            ))}
         </View>    
     )  
 }
@@ -89,5 +76,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center', 
         alignItems: 'center',
     },
+    head: { height: 40, backgroundColor: '#f1f8ff' },
+    text: { margin: 6 }
 });
 
