@@ -9,17 +9,18 @@ import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-ta
 
 
 
-export default function PhotoList() {
+export default function PhotoList({navigation}) {
 
     useEffect(() => {
 
         getPhoto();
-        
 
-    }, []);
+
+    }, [data]);
 
     const [states, setStates] = useState({
         data : '',
+        loading : false,
     });
 
 
@@ -37,14 +38,13 @@ export default function PhotoList() {
                 temp.push(response.data[i].state);
 
                 arr.push(temp);
-            }
+           }
 
-            
-
-            console.log(arr)
             setStates({
                 data : arr,
+                loading : true
             });
+
 
         }).catch(err => {
             console.log(err);
@@ -52,20 +52,36 @@ export default function PhotoList() {
     }
     
 
-    const { data } = states;
+    const { data, loading } = states;
     
 
     const dataOnPress = (e) => {
-        console.log(e);
-    }
+        let clickedData = e._dispatchInstances.memoizedProps.children;
 
+
+        navigation.navigate('photoDetail', {
+            data : clickedData[0]
+        });
+    }
 
 
     return (
         <View style={styles.container}>
-            {data.map(data => (
-                <Text key={data[0]} onPress={dataOnPress}>{data}</Text>
-            ))}
+            <View style={{flex : 0.05}}></View>
+
+            <ScrollView style={{flex : 0.95}}>
+            
+            {
+            loading && 
+            
+            data.map(data => (
+                <Text key={data[0]} onPress={dataOnPress} style={styles.text}>{data}</Text>
+            ))
+            }
+
+
+            </ScrollView>
+        
         </View>    
     )  
 }

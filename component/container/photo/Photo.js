@@ -21,7 +21,7 @@ export default function Photo() {
     return (
         <Stack.Navigator>
             <Stack.Screen name="photoList" component={PhotoList} options={{headerShown: false}} />
-            <Stack.Screen name="photoDetal" component={PhotoDetail} options={{headerShown: false}} />
+            <Stack.Screen name="photoDetail" component={PhotoDetail} />
         </Stack.Navigator>
     )  
 }
