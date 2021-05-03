@@ -1,19 +1,24 @@
-import axios from 'axios';
-import React from 'react';
+/*
+*   회원목록 컴포넌트(스크린)
+*
+*/
+
+import React from 'react'
+import { StyleSheet, Text, TextInput, View, Button, Image, ScrollView, TouchableOpacity, Dimensions  } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { StyleSheet, Text, TextInput, View, Button, Image, ListViewComponent, FlatList, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
-import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+import { Table, TableWrapper, Row, Rows, Col, Cols, Cell} from 'react-native-table-component';
 
+import axios from 'axios';
 
+export default function List() {
 
-
-
-export default function PhotoList({navigation}) {
+    
 
     useEffect(() => {
 
-        getPhoto();
+        getUser();
 
 
     }, [data]);
@@ -21,36 +26,30 @@ export default function PhotoList({navigation}) {
     const [states, setStates] = useState({
         data : '',
         loading : false,
-        widthArr : [],
-
     });
+    
+    const { data, loading } = states;
 
 
-
-    async function getPhoto() {
-        await axios.post('http://192.168.0.8:3333/api/photo/list', {page : 1}, {withCredentials : true}).then(response => {
+    async function getUser() {
+        await axios.post('http://192.168.0.8:3333/api/userlist', {withCredentials : true}).then(response => {
 
             console.log(response.data) 
 
-            let arr = new Array();
+            let arr = [];
 
             for(let i = 0 ; i < response.data.length; i++) {
-                let temp = new Array();
-                temp.push(response.data[i].idx);
-                temp.push(response.data[i].time);
-                temp.push(response.data[i].process);
+                arr.push([
+                response.data[i].idx,
+                response.data[i].id,
+                response.data[i].name,
+                response.data[i].access,                
+                ]);                
+           };
 
-                arr.push(temp);
-           }
-
-           let width1 = Dimensions.get('window').width * 0.2
-           let width2 = Dimensions.get('window').width * 0.55
-           let width3 = Dimensions.get('window').width * 0.2 
-
-           setStates({
+            setStates({
                 data : arr,
-                loading : true,
-                widthArr : [width1, width2, width3]
+                loading : true
             });
 
 
@@ -58,20 +57,15 @@ export default function PhotoList({navigation}) {
             console.log(err);
         })
     }
-    
 
-    const { data, loading, widthArr } = states;
-    
+    const dataOnPress = (key) => {
+        
+        
+    }
 
-    const dataOnPress = (data) => {
-        console.log(data)
+    const widthArr = [
 
-
-        navigation.navigate('photoDetail', {
-            data : data
-        });
-    };
-
+    ]
 
     return (
         <View style={styles.container}>
@@ -79,20 +73,18 @@ export default function PhotoList({navigation}) {
 
             <ScrollView style={{flex : 0.95}}>
             
-           
-
             {
             loading && 
             <Table
                 borderStyle={{ borderColor: 'gray' }}
-                style={{ borderRadius: 10, width : Dimensions.get('window').width * 0.95, }}
+                style={{ borderRadius: 10, width : Dimensions.get('window').width * 0.9, }}
                 textStyle={{ fontSize: 16, fontFamily: 'nunito' }}
                 >
                 <Row
-                    data={["No","Time", "State",]}
+                    data={["No","ID", "Name", "Rank",]}
                     style={{ flexWrap: 'wrap' }}
                     textStyle={styles.headText}
-                    widthArr={widthArr}
+                    //widthArr={widthArr}
                 />
                 {
                 data.map(data => (
@@ -104,8 +96,6 @@ export default function PhotoList({navigation}) {
                             textStyle={styles.rowText}                  
                             idx={data.idx}
                             style={styles.row}
-                            widthArr={widthArr}
-
                         />
                     </TouchableOpacity>    
                 ))

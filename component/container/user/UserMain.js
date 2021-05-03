@@ -12,6 +12,11 @@ import { StackActions } from '@react-navigation/routers';
 
 export default function UserMain({navigation}) {
 
+    const list = () => {
+        navigation.navigate({name : 'list'});
+    }
+
+
     const register = () => {
         navigation.navigate({name : 'register'});
     }
@@ -22,6 +27,7 @@ export default function UserMain({navigation}) {
 
     return (
         <View style={styles.container}>
+            <Button title="관리자 목록" onPress={list} />
             <Button title="관리자 등록" onPress={register} />
             <Button title="관리자 수정" onPress={manage} />
         </View>
