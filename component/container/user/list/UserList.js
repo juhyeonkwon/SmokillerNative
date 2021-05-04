@@ -4,7 +4,7 @@
 */
 
 import React from 'react'
-import { StyleSheet, Text, TextInput, View, Button, Image, ScrollView, TouchableOpacity, Dimensions  } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, Image, ScrollView, TouchableOpacity, Dimensions, RefreshControl  } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -12,7 +12,7 @@ import { Table, TableWrapper, Row, Rows, Col, Cols, Cell} from 'react-native-tab
 
 import axios from 'axios';
 
-export default function List() {
+export default function UserList({navigation}) {
 
     
 
@@ -39,11 +39,20 @@ export default function List() {
             let arr = [];
 
             for(let i = 0 ; i < response.data.length; i++) {
+                let temp;
+
+                switch(response.data[i].access) {
+                    case 1 : temp='사원'; break;
+                    case 2 : temp='관리자'; break;
+                    case 3 : temp='최고관리자'; break;
+                    default : break;
+                }
+                
                 arr.push([
-                response.data[i].idx,
-                response.data[i].id,
-                response.data[i].name,
-                response.data[i].access,                
+                    response.data[i].idx,
+                    response.data[i].id,
+                    response.data[i].name,
+                    temp
                 ]);                
            };
 
@@ -58,20 +67,45 @@ export default function List() {
         })
     }
 
-    const dataOnPress = (key) => {
-        
-        
+    const dataOnPress = (data) => {
+        navigation.navigate('manage', {
+            data : data
+        });        
     }
 
-    const widthArr = [
+     //새로고침 컨트롤
+     const [refreshing, setRefreshing] = useState(false);
 
-    ]
+     const wait = (timeout) => {
+         return new Promise(resolve => setTimeout(resolve, timeout));
+       }
+ 
+     const onRefresh = React.useCallback(() => {
+         setRefreshing(true);
+         setStates({
+             loading : false
+         });
+         wait(500).then(() => {
+             setRefreshing(false);
+             getUser();
+         });
+     }, []);
+ 
+
 
     return (
         <View style={styles.container}>
             <View style={{flex : 0.05}}></View>
 
-            <ScrollView style={{flex : 0.95}}>
+            <ScrollView 
+            style={{flex : 0.95}} 
+            refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
+            >
             
             {
             loading && 
@@ -119,8 +153,8 @@ const styles = StyleSheet.create({
     },
     head: { height: 40, backgroundColor: '#f1f8ff' },
     row: { 
-        paddingTop : 7,
-        paddingBottom : 7,
+        paddingTop : 10,
+        paddingBottom : 10,
         borderBottomWidth : 0.3,
         borderBottomColor : "gray"
 

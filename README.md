@@ -20,3 +20,11 @@ expo install react-native-gesture-handler react-native-reanimated react-native-s
 npm install react-native-table-component
 
 expo install @react-native-async-storage/async-storage
+
+npm i react-native-picker-select
+
+npm install @react-native-picker/picker --save
+
+npm install --save @react-native-segmented-control/segmented-control
+
+npm i react-native-loading-spinner-overlay

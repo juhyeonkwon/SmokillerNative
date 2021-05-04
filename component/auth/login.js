@@ -73,6 +73,7 @@ export default function Login( { navigation, routes}) {
             <TextInput
             placeholder="PW"
             style={styles.textInput}
+            secureTextEntry={true}
             textContentType='password'
             name="password"
             onChangeText={onChangePw}

@@ -5,16 +5,10 @@
 */
 
 import React from 'react'
-import { StyleSheet, Text, TextInput, View, Button, Image } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { StackActions } from '@react-navigation/routers';
 import { createStackNavigator } from '@react-navigation/stack';
 import UserMain from './UserMain';
 import Register from './Register';
-import Manage from './Manage';
-import List from './List'
+import ListNav from './list/ListNav'
 
 export default function UserTopNav() {
 
@@ -24,11 +18,9 @@ export default function UserTopNav() {
     return( 
         <Stack.Navigator>
             <Stack.Screen name="User" component={UserMain} options={{headerShown: false}} />
-            <Stack.Screen name="list" component={List} />
+            <Stack.Screen name="list" component={ListNav} options={{headerShown: false}}/>
             <Stack.Screen name="register" component={Register}  />
-            <Stack.Screen name="manage" component={Manage}  />
         </Stack.Navigator>
     )
-
 
 }

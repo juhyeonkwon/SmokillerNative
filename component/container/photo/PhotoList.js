@@ -1,9 +1,15 @@
+/*
+*   사진의 리스트를 불러온다.
+*
+*/
+
 import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { StyleSheet, Text, TextInput, View, Button, Image, ListViewComponent, FlatList, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, Image, ListViewComponent, FlatList, ScrollView, Dimensions, TouchableOpacity, RefreshControl } from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 
 
@@ -26,7 +32,6 @@ export default function PhotoList({navigation}) {
     });
 
 
-
     async function getPhoto() {
         await axios.post('http://192.168.0.8:3333/api/photo/list', {page : 1}, {withCredentials : true}).then(response => {
 
@@ -38,7 +43,11 @@ export default function PhotoList({navigation}) {
                 let temp = new Array();
                 temp.push(response.data[i].idx);
                 temp.push(response.data[i].time);
-                temp.push(response.data[i].process);
+                if(response.data[i].process == 1) {
+                    temp.push("done");
+                } else {
+                    temp.push("yet");
+                }
 
                 arr.push(temp);
            }
@@ -73,16 +82,30 @@ export default function PhotoList({navigation}) {
     };
 
 
+    //새로고침 컨트롤
+    const [refreshing, setRefreshing] = useState(false);
+
+    const wait = (timeout) => {
+        return new Promise(resolve => setTimeout(resolve, timeout));
+      }
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        setStates({
+            loading : false
+        });
+        wait(500).then(() => {
+            setRefreshing(false);
+            getPhoto();
+        });
+    }, []);
+
+    
+
+
     return (
         <View style={styles.container}>
             <View style={{flex : 0.05}}></View>
-
-            <ScrollView style={{flex : 0.95}}>
-            
-           
-
-            {
-            loading && 
             <Table
                 borderStyle={{ borderColor: 'gray' }}
                 style={{ borderRadius: 10, width : Dimensions.get('window').width * 0.95, }}
@@ -94,6 +117,26 @@ export default function PhotoList({navigation}) {
                     textStyle={styles.headText}
                     widthArr={widthArr}
                 />
+                </Table>
+            <ScrollView 
+            style={{flex : 0.95}} 
+            refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
+            >
+            
+           
+
+            {
+            loading && 
+            <Table
+                borderStyle={{ borderColor: 'gray' }}
+                style={{ borderRadius: 10, width : Dimensions.get('window').width * 0.95, }}
+                textStyle={{ fontSize: 16, fontFamily: 'nunito' }}
+                >               
                 {
                 data.map(data => (
                     <TouchableOpacity key={data[0]} onPress={(e) => {dataOnPress(data)}}>
@@ -116,6 +159,10 @@ export default function PhotoList({navigation}) {
 
 
             </ScrollView>
+
+        <Spinner
+          visible={!loading}
+        />
         
         </View>    
     )  
@@ -129,8 +176,8 @@ const styles = StyleSheet.create({
     },
     head: { height: 40, backgroundColor: '#f1f8ff' },
     row: { 
-        paddingTop : 7,
-        paddingBottom : 7,
+        paddingTop : 10,
+        paddingBottom : 10,
         borderBottomWidth : 0.3,
         borderBottomColor : "gray"
 

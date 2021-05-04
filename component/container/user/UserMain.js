@@ -29,7 +29,6 @@ export default function UserMain({navigation}) {
         <View style={styles.container}>
             <Button title="관리자 목록" onPress={list} />
             <Button title="관리자 등록" onPress={register} />
-            <Button title="관리자 수정" onPress={manage} />
         </View>
     );
 }

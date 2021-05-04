@@ -13,8 +13,9 @@ import { useEffect } from 'react';
 import Home from './home/Home';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserTopNav from './user/UserTopNav';
-import Setting from './setting/Setting';
+import Setting from './setting/SettingTopNav';
 import { Ionicons } from '@expo/vector-icons';
+
 
 
 
