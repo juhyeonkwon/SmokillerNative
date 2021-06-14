@@ -11,7 +11,7 @@ import { StyleSheet, Text, TextInput, View, Button, Image, ListViewComponent, Fl
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import Spinner from 'react-native-loading-spinner-overlay';
 
-
+import api from '../../api'
 
 
 
@@ -33,17 +33,17 @@ export default function PhotoList({navigation}) {
 
 
     async function getPhoto() {
-        await axios.post('http://192.168.0.8:3333/api/photo/list', {page : 1}, {withCredentials : true}).then(response => {
+        await axios.get(api + '/api/photo/list.json', {page : 1}, {withCredentials : true}).then(response => {
 
-            console.log(response.data) 
+            console.log(response.data.photolist) 
 
             let arr = new Array();
 
-            for(let i = 0 ; i < response.data.length; i++) {
+            for(let i = 0 ; i < response.data.photolist.length; i++) {
                 let temp = new Array();
-                temp.push(response.data[i].idx);
-                temp.push(response.data[i].time);
-                if(response.data[i].process == 1) {
+                temp.push(response.data.photolist[i].idx);
+                temp.push(response.data.photolist[i].time);
+                if(response.data.photolist[i].process == 1) {
                     temp.push("done");
                 } else {
                     temp.push("yet");

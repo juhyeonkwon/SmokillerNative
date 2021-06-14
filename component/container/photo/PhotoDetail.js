@@ -9,12 +9,13 @@ import { StyleSheet, Text, TextInput, View, Button, Image, Dimensions, ScrollVie
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNPickerSelect from 'react-native-picker-select';
 
+import api from '../../api';
 
 export default function PhotoDetail({ navigation, route}) {
 
     useEffect(() => {
         
-        axios.post('http://192.168.0.8:3333/api/photo/detail', { id : route.params.data[0], process : route.params.data[2] }, {withCredentials : true}).then(response => {
+        axios.post('http://58.122.247.48:3333/api/photo/detail', { id : route.params.data[0], process : route.params.data[2] }, {withCredentials : true}).then(response => {
 
             //만약 처리가 안되있으면.. 로그인한사람의 이름이 자동으로 들어가게 한다.
             if(response.data[0].process == 0 ) {
@@ -27,7 +28,7 @@ export default function PhotoDetail({ navigation, route}) {
         
                     setState({
                         data : response.data[0],
-                        user_id : user_info.id
+                        user_id : user_info.idx
                     });        
 
                 })    
@@ -49,7 +50,7 @@ export default function PhotoDetail({ navigation, route}) {
     const { data, user_id } = states
 
     const [ processData, setProcessData ] = useState({
-        smoke : '',
+        smoke : 1,
         comment : '',
     });
 
@@ -57,8 +58,8 @@ export default function PhotoDetail({ navigation, route}) {
 
     const onClick = () => {
 
-        axios.post('http://192.168.0.8:3333/api/photo/proceed', {photo_id : data.idx, user_id : user_id, smoking : smoke, comment : comment}, {withCredentials : true}).then(response => {
-            if(response.data === 1) {
+        axios.post(api + '/api/photo/proceed', {photo_idx : data.idx, user_idx : parseInt(user_id), smoking : smoke, comment : comment}, {withCredentials : true}).then(response => {
+            if(response.data.suceed === 1) {
                 Alert.alert('알림', '처리가 완료되었습니다. 새로고침을 해주세요.')
             } else {
                 Alert.alert('알림', '에러가 발생했습니다.')
@@ -82,7 +83,7 @@ export default function PhotoDetail({ navigation, route}) {
             <Image 
              style={styles.img}
              source={{
-                uri: 'https://reactnative.dev/img/tiny_logo.png',
+                uri: api + data.src,
                 }}
               />
 

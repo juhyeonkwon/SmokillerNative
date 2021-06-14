@@ -24,7 +24,7 @@ export default function Manage({ navigation, route }) {
     const onClick = () => {
         console.log(access)
        
-        axios.post('http://192.168.0.8:3333/api/userlist/modify', {idx : route.params.data[0], access : access}, {withCredentials : true}).then(response => {
+        axios.post('http://58.122.247.48:3333/api/userlist/modify', {idx : route.params.data[0], access : access}, {withCredentials : true}).then(response => {
             
             if(response.data === 1) {
                 Alert.alert('알림', '수정을 완료했습니다. 새로고침을 해주세요.')
@@ -49,14 +49,14 @@ export default function Manage({ navigation, route }) {
                 },
                 {
                     text: "YES",
-                    onPress : () => {deleteRequset()},                    
+                    onPress : () => {deleteRequest()},                    
                 }
             ], {cancelable : false});      
     }
 
-    const deleteRequset = () => {
+    const deleteRequest = () => {
 
-        axios.post('http://192.168.0.8:3333/api/userlist/delete', {idx : route.params.data[0]}, {withCredentials : true}).then(response => {
+        axios.post('http://58.122.247.48:3333/api/userlist/delete', {idx : route.params.data[0]}, {withCredentials : true}).then(response => {
             if(response.data === 1) {
 
                 Alert.alert('알림','삭제를 완료했습니다.')

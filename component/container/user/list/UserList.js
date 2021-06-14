@@ -32,7 +32,7 @@ export default function UserList({navigation}) {
 
 
     async function getUser() {
-        await axios.post('http://192.168.0.8:3333/api/userlist', {withCredentials : true}).then(response => {
+        await axios.post('http://58.122.247.48:3333/api/userlist', {withCredentials : true}).then(response => {
 
             console.log(response.data) 
 

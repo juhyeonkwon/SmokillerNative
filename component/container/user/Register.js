@@ -55,7 +55,7 @@ export default function Register({navigation}) {
             return ;
         } 
         
-        axios.post('http://192.168.0.8:3333/api/signup', {id : id, name : name, password : password, rank : access}, {withCredentials : true}).then(response => {
+        axios.post('http://58.122.247.48:3333/api/signup', {id : id, name : name, password : password, rank : access}, {withCredentials : true}).then(response => {
             console.log(response.data);
             if(response.data === 1) {
                 Alert.alert('알림', '관리자 등록이 완료되었습니다.')

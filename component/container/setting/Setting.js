@@ -14,7 +14,11 @@ export default function Setting({ navigation }) {
 
        function logout() {
         AsyncStorage.removeItem('user_info');
-        navigation.navigate({ name : 'login'});
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'login' }],
+          });
+        //navigation.navigate({ name : 'login'});
            
     }
 

@@ -47,7 +47,7 @@ export default function PasswordModify({ navigation }) {
 
             const user_info = JSON.parse(result);
 
-            axios.post('http://192.168.0.8:3333/api/modify_pw', { idx : user_info.user_id, password : password}, {withCredentials : true} ).then(response => {
+            axios.post('http://58.122.247.48:3333/api/modify_pw', { idx : user_info.user_id, password : password}, {withCredentials : true} ).then(response => {
                 if(response.data === 1) {
                     Alert.alert('알림', '수정을 완료했습니다.')
                     navigation.goBack();

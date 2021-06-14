@@ -7,6 +7,7 @@ import axios from 'axios';
 
 import AsyncStorage from '../../node_modules/@react-native-async-storage/async-storage';
 
+import api from '../api.js'
 
 export default function Login( { navigation, routes}) {
 
@@ -30,8 +31,11 @@ export default function Login( { navigation, routes}) {
 
 
     const onClick= async function () {
-      await axios.post('http://192.168.0.8:3333/api/login', {id : id, password : password}, {withCredentials : true}).then(response => {
+      await axios.get(api + '/api/user/login?id=' + id + "&password=" + password, {withCredentials : true}).then(response => {
 
+        if(response.data.login == 'fail') {
+          return;
+        }
         //로그인을 하게되면 AsyncStorage에 로그인 정보를 저장하게 된다. 받아올 값은 user_id와 name 값
         const setData = async(data) => {
           try {
